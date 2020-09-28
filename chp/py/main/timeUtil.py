@@ -3,7 +3,7 @@
 import pandas as pd
 import datetime
 import json
-
+import time
 import requests
 
 
@@ -13,10 +13,16 @@ def judgedate(datenum):
     :param datenum:
     :return:
     """
-    url='http://tool.bitefu.net/jiari/?d={}'.format(datenum)
-    html = requests.get(url=url).content
-    data = json.loads(html.decode('utf-8'))
-    # value=data['data']
+    data = ''
+    try:
+        url='http://tool.bitefu.net/jiari/?d={}'.format(datenum)
+        # 推迟1秒请求
+        time.sleep(1.25)
+        html = requests.get(url=url).content
+        data = json.loads(html.decode('utf-8'))
+        # value=data['data']
+    except Exception as err:
+        print(datenum, "请求出错！", err)
     return data
 
 def weekend(day):
